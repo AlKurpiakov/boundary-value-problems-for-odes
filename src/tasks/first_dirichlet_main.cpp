@@ -99,9 +99,11 @@ TaskResult runFirstDirichletMainTask(const InputData& input, const VariantData& 
     double max_diff = 0.0;
     double max_x = 0.0;
     int max_i = 0;
-bool accuracy_achieved = false;
+    bool accuracy_achieved = false;
+    bool comparison_performed = false;
 
-    while (n * mult <= input.maxSegments) {
+    while (1LL * n * mult <= input.maxSegments) {
+        comparison_performed = true;
         v = solveGrid(n, xi, mu1, mu2);
         v2 = solveGrid(n * mult, xi, mu1, mu2);
 
@@ -119,17 +121,30 @@ bool accuracy_achieved = false;
         }
 
         if (max_diff <= input.tolerance) {
+            accuracy_achieved = true;
             break;
         }
-    
-        if (n * mult >= input.maxSegments) {
+
+        const int next_n = n * mult;
+        if (1LL * next_n * mult > input.maxSegments) {
             break;
         }
-        
-        n *= mult;
+
+        n = next_n;
     }
 
     std::ostringstream noteStr;
+
+    if (!comparison_performed) {
+        noteStr << "Невозможно построить уточненную сетку для сравнения: n * "
+                << mult << " = " << (1LL * n * mult)
+                << " больше maxSegments = " << input.maxSegments << ".\n"
+                << "Увеличьте max n или уменьшите начальное n.";
+        task.note = noteStr.str();
+        task.status = "warning";
+        return task;
+    }
+
     noteStr << "Для решения задачи использована равномерная сетка с числом разбиений n = " << n << ";\n"
             << "задача должна быть решена с заданной точностью ε = " 
             << std::scientific << std::setprecision(1) << input.tolerance << ";\n";
