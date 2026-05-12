@@ -239,17 +239,19 @@ TaskResult runMixedTestClassicTask(const InputData& input, const VariantData& va
     std::ostringstream note;
     note << "Для тестовой смешанной задачи использована равномерная сетка с n = "
          << solution.computed.n << ".\n"
-         << "Правая граничная производная задана как u(1)=mu2.\n"
+         << "Правое граничное условие: k(1)u'(1)=mu2. Классическая аппроксимация: "
+         << "k(1)(v_n-v_{n-1})/h = mu2.\n"
          << "Коэффициенты тестовой задачи k*, q*, f* заданы как предел соответствующей функции при x -> xi слева или справа и равны:\n"
-         << "k1* = lim(k1(x)) при x -> xi-0 = lim(1) при x -> xi-0 = 1;\nk2* = lim(k2(x)) при x -> xi+0 = lim(exp(x^2)) при x -> xi+0 = exp(1/3);\n"
-         << "q1* = lim(q1(x)) при x -> xi-0 = lim(x^2) при x -> xi-0 = 1/3;\nq2* = lim(q2(x)) при x -> xi+0 = lim(1 + x^4) при x -> xi+0 = 10/9;\n"
-         << "f1* = lim(f1(x)) при x -> xi-0 = lim(x^2 - 1) при x -> xi-0 = -2/3;\nf2* = lim(f2(x)) при x -> xi+0 = lim(1) при x -> xi+0 = 1;\n"
+         << "k1* = 1; k2* = exp(1/3);\n"
+         << "q1* = 1/3; q2* = 10/9;\n"
+         << "f1* = -2/3; f2* = 1.\n"
          << "Заданная точность epsilon = " << formatScientific(input.tolerance) << ".\n"
-         << "Достигнутая точность epsilon_2 = max|v(x_i)-u(x_{i})| = "
+         << "Достигнутая точность epsilon_1 = max|u(x_i)-v(x_i)| = "
          << formatScientific(solution.check.epsilon) << ".\n"
          << "Максимальная разность наблюдается в узле i = " << solution.check.index
          << ", x = " << std::setprecision(10) << solution.check.x << ".\n"
-         << "Статус точности: " << (solution.meetsTolerance ? "достигнута" : "не достигнута в пределах maxSegments") << ".";
+         << "Статус точности: "
+         << (solution.meetsTolerance ? "достигнута" : "не достигнута в пределах maxSegments") << ".";
 
     result.status = solution.meetsTolerance ? "done" : "done_tolerance_not_reached";
     result.note = note.str();
