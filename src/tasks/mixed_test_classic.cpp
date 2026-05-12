@@ -13,25 +13,30 @@
 #include <vector>
 
 namespace {
-    
-    double u(double x, VariantData data){
-    double C1 = 0.0, C2 = 0.0;
-    double lymbda = 0.0;
-    double partial = 0.0;
-    if(x < 0 || x > 1) throw "x out of range";
-    if(x < data.xi){
-        C1 = 0.587133640028619;
-        C2 = 3.412866359971381;
-        lymbda = 1/sqrt(3); 
-        partial = -2.0; 
+
+double u(double x, const VariantData& data) {
+    if (x < 0.0 || x > 1.0) {
+        throw std::out_of_range("x out of range");
     }
-    if(x >= data.xi){
-        C1 = -0.116209345000844;
-        C2 =  0.936306880621530;
-        lymbda = sqrt(10.0/(9.0 * exp(1.0/3.0)));
+
+    double c1 = 0.0;
+    double c2 = 0.0;
+    double lambda = 0.0;
+    double partial = 0.0;
+
+    if (x < data.xi) {
+        c1 = 1.707840332398475;
+        c2 = 2.292159667601525;
+        lambda = 1.0 / std::sqrt(3.0);
+        partial = -2.0;
+    } else {
+        c1 = 0.43894043381611791;
+        c2 = 0.65473977978033082;
+        lambda = std::sqrt(10.0 / (9.0 * std::exp(1.0 / 3.0)));
         partial = 0.9;
     }
-    return C1 * exp(lymbda * x) + C2 * exp(-lymbda * x) + partial;
+
+    return c1 * std::exp(lambda * x) + c2 * std::exp(-lambda * x) + partial;
 }
 
 struct GridSolution {
@@ -39,13 +44,14 @@ struct GridSolution {
     std::vector<double> values;
 };
 
-GridSolution solveAnalytic(int n, VariantData variant){
-    std::vector<double> res(n+1);
+GridSolution solveAnalytic(int n, const VariantData& variant) {
+    std::vector<double> res(n + 1);
     const double h = 1.0 / static_cast<double>(n);
 
-    for(int i = 0; i <= n; i++){
-        res[i] = u(i*h, variant);
+    for (int i = 0; i <= n; ++i) {
+        res[static_cast<size_t>(i)] = u(i * h, variant);
     }
+
     return GridSolution{n, res};
 }
 
