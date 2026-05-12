@@ -84,7 +84,7 @@ TaskResult runFirstDirichletMainTask(const InputData& input, const VariantData& 
         "2. Основная",
         "u(0) = 2, u(1) = 1",
         "Метод баланса, сравнение сеток n и 2n",
-        "Исполнитель 2",
+        "Папулина Юлия",
         makeMainTaskColumns()
     );
     int n = std::max(2, input.segments);

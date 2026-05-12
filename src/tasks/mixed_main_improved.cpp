@@ -234,7 +234,7 @@ TaskResult runMixedMainImprovedTask(const InputData& input, const VariantData& v
         "4. Смешанная основная, улучш. ГУ",
         "u(0)=mu1, w(1)=mu2",
         "Метод баланса на правой половинной ячейке",
-        "Смешанная краевая основная задача, улучш. аппрокс. ГУ",
+        "Сахаров Александр",
         makeMainTaskColumns());
 
     const RefinedSolution solution = solveWithRefinement(input, variant);

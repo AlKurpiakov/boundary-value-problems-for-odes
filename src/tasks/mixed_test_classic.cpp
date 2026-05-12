@@ -277,7 +277,7 @@ TaskResult runMixedTestClassicTask(const InputData& input, const VariantData& va
         "3. Смешанная тест.",
         "Смешанные граничные условия",
         "Классическая аппроксимация граничных условий",
-        "Исполнитель 3",
+        "Романова Василиса",
         makeTestTaskColumns());
 
     const RefinedSolution solution = solveWithRefinement(input, variant);

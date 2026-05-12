@@ -902,7 +902,7 @@ class LabUI(tk.Tk):
             f"Задача: {task.get('title', task_def['title'])}\n"
             f"Тип условий: {task.get('boundaryKind', '')}\n"
             f"Аппроксимация: {task.get('approximationKind', '')}\n"
-            f"Ответственный блок: {task.get('ownerHint', task_def['owner'])}\n"
+            f"Работу выполнил: {task.get('ownerHint', task_def['owner'])}\n"
             f"Строк таблицы: {rows_count}\n\n"
             f"{note}"
         )

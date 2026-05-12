@@ -203,7 +203,7 @@ TaskResult runFirstDirichletTestTask(const InputData& input, const VariantData& 
         "1. Тестовая",
         "u(0)=mu1, u(1)=mu2",
         "Метод баланса, тестовая задача с аналитическим решением",
-        "Исполнитель 1",
+        "Курпяков Алексей",
         makeTestTaskColumns());
 
     int n = std::max(2, input.segments);
